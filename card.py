@@ -26,6 +26,13 @@ class Card:
 
         return card_number_int
 
+    @staticmethod
+    def validate_card_number(card_number: int):
+        num_of_digits = len(str(card_number))
+        if num_of_digits != 19:
+            raise ValueError("Invalid Card Number: Card number must be 19 digits long")
+
+
     def retrieve_card_info(card_number: int):
         card_number_bytes = card_number.to_bytes(
             (card_number.bit_length() + 7) // 8, byteorder="big"
