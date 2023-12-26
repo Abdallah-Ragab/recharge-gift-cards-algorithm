@@ -49,7 +49,6 @@ class CLI(cmd.Cmd):
 
     def do_buy(self, arg):
         """Buy a card."""
-        card_serial = random.randint(0, 9_999_999_999) # random number between 0 and 9999999999
         card_value = int(arg)
         try:
             Card.validate_card_value(card_value)
@@ -57,8 +56,8 @@ class CLI(cmd.Cmd):
             print(e)
             return
 
-        card_number = Card.generate_card_number(card_serial, card_value)
-        print(f"Card number: {card_number}")
+        card_number = Card.generate_card_number(card_value)
+        print(f"Card number: {card_number}, Card value: {card_value}, Card serial: {Card.get_card_info(card_number)[0]}")
 
     def do_exit(self, arg):
         """Exit the program."""
