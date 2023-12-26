@@ -168,7 +168,27 @@ class Card:
         card_serial, card_value = Card.retrieve_card_info(card_number)
         BitStorage.write_bit(card_serial, 1)
         return card_value
+    @staticmethod
+    @property
+    def last_card_serial():
+        """
+        Retrieves the last card serial number.
 
+        Returns:
+            int: The last card serial number.
+        """
+        return BitStorage.read_from_file('last.serial')
+
+    @staticmethod
+    @last_card_serial.setter
+    def last_card_serial(value: int):
+        """
+        Sets the last card serial number.
+
+        Args:
+            value (int): The value to set the last card serial number to.
+        """
+        BitStorage.write_to_file('last.serial', value)
 
 def test():
     card_number = Card.generate_card_number(1234567890, 100)
