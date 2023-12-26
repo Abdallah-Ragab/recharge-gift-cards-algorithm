@@ -54,8 +54,13 @@ class Card:
             raise ValueError("Value is too large")
 
         if not serial:
-            serial = Card.last_card_serial + 1
-            Card.last_card_serial = serial
+            last_serial = Card.get_last_serial()
+            if last_serial:
+                last_serial = int(last_serial)
+            else:
+                last_serial = 0
+            serial = last_serial + 1
+            Card.set_last_serial(serial)
 
         card_value = value
         card_serial = serial
@@ -174,9 +179,8 @@ class Card:
         card_serial, card_value = Card.get_card_info(card_number)
         BitStorage.write_bit(card_serial, 1)
         return card_value
-    @staticmethod
-    @property
-    def last_card_serial():
+    # @staticmethod
+    def get_last_serial():
         """
         Retrieves the last card serial number.
 
@@ -185,16 +189,14 @@ class Card:
         """
         return BitStorage.read_from_file('last.serial')
 
-    @staticmethod
-    @last_card_serial.setter
-    def last_card_serial(value: int):
+    def set_last_serial(value: int):
         """
         Sets the last card serial number.
 
         Args:
             value (int): The value to set the last card serial number to.
         """
-        BitStorage.write_to_file('last.serial', value)
+        BitStorage.write_to_file('last.serial', str(value))
 
 def test():
     card_number = Card.generate_card_number(1234567890, 100)
