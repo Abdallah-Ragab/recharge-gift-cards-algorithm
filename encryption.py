@@ -7,10 +7,9 @@ class DESCipher:
 
     @staticmethod
     def encrypt(message: bytes):
-        byte_representation = message.to_bytes((message.bit_length() + 7) // 8, byteorder='big')
 
         cipher = DES.new(DESCipher.key, DES.MODE_ECB)
-        padded_message = pad(byte_representation, DES.block_size)
+        padded_message = pad(message, DES.block_size)
         ciphertext = cipher.encrypt(padded_message)
         return ciphertext
 
