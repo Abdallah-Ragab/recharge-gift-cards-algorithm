@@ -13,7 +13,7 @@ class Card:
         generate_card_number(value: int, serial: int = None) -> int:
             Generates a unique card number based on the given serial and value.
 
-        validate_card_number(card_number: int) -> None:
+            (card_number: int) -> None:
             Validates the format of a card number.
 
         validate_card_value(card_value: int) -> None:
@@ -78,20 +78,6 @@ class Card:
 
         return card_number_int
 
-    @staticmethod
-    def validate_card_number(card_number: int) -> None:
-        """
-        Validates the format of a card number.
-
-        Args:
-            card_number (int): The card number to validate.
-
-        Raises:
-            ValueError: If the card number has an invalid number of digits.
-        """
-        num_of_digits = len(str(card_number))
-        if num_of_digits not in [18, 19, 20]:
-            raise ValueError("Invalid Card Number")
 
     @staticmethod
     def validate_card_value(card_value: int) -> None:
@@ -118,11 +104,16 @@ class Card:
         Returns:
             Tuple[int, int]: A tuple containing the serial and value of the card.
         """
+        card_number = int(card_number)
         card_number_bytes = card_number.to_bytes(
             (card_number.bit_length() + 7) // 8, byteorder="big"
         )
 
-        decrypted_bytes = DESCipher.decrypt(card_number_bytes)
+        try:
+            decrypted_bytes = DESCipher.decrypt(card_number_bytes)
+        except Exception as e:
+            raise ValueError("Invalid Card Number: This card number does not exist")
+
         card_int = int.from_bytes(decrypted_bytes, byteorder="big")
 
         card_serial_str = str(card_int)[:-3]
