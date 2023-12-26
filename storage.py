@@ -6,18 +6,19 @@ class BitStorage:
     directory = "storage"
     num_files = 100
     max_bit = 9_999_999_999
-    max_bits_per_file = max_bit+1 // num_files
+    max_bits_per_file = max_bit + 1 // num_files
 
     def get_file_name(bit_index):
         file_index = bit_index // BitStorage.max_bits_per_file
-        return f"cards.{file_index}"
+        file_index_str = str(file_index).zfill(len(str(BitStorage.num_files)))
+        return f"cards.{file_index_str}"
 
     def get_file_path(bit_index):
         return os.path.join(BitStorage.directory, BitStorage.get_file_name(bit_index))
 
-    def create_file_if_not_exists():
-        if not os.path.exists(BitStorage.file_path):
-            with open(BitStorage.file_path, "w"):
+    def create_file_if_not_exists(file_path):
+        if not os.path.exists(file_path):
+            with open(file_path, "w"):
                 pass
 
     def get_bit_index(bit_index):
@@ -29,10 +30,11 @@ class BitStorage:
 
     @staticmethod
     def write_bit(bit_index, bit_value):
-        BitStorage.create_file_if_not_exists()
+        file_path = BitStorage.get_file_path(bit_index)
+        BitStorage.create_file_if_not_exists(file_path)
         byte_index, offset = BitStorage.get_byte_and_offset(bit_index)
 
-        with open(BitStorage.file_path, "rb+") as file:
+        with open(file_path, "rb+") as file:
             file.seek(byte_index)
 
             try:
@@ -50,10 +52,11 @@ class BitStorage:
 
     @staticmethod
     def read_bit(bit_index):
-        BitStorage.create_file_if_not_exists()
+        file_path = BitStorage.get_file_path(bit_index)
+        BitStorage.create_file_if_not_exists(file_path)
         byte_index, offset = BitStorage.get_byte_and_offset(bit_index)
 
-        with open(BitStorage.file_path, "rb") as file:
+        with open(file_path, "rb") as file:
             file.seek(byte_index)
 
             try:
