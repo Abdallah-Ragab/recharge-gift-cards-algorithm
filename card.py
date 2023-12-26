@@ -36,7 +36,20 @@ class Card:
 
     @staticmethod
     def generate_card_number(value: int, serial: int = None) -> int:
+        """
+        Generates a card number based on the given value and serial number.
 
+        Args:
+            value (int): The value of the card.
+            serial (int, optional): The serial number of the card. If not provided, it will be automatically generated.
+
+        Returns:
+            int: The generated card number.
+
+        Raises:
+            ValueError: If the value is too large.
+
+        """
         if value > Card.max_value:
             raise ValueError("Value is too large")
 
@@ -45,6 +58,7 @@ class Card:
             Card.last_card_serial = serial
 
         card_value = value
+        card_serial = serial
 
         card_serial_str = str(card_serial).zfill(10)
         card_value_str = str(card_value).zfill(3)
