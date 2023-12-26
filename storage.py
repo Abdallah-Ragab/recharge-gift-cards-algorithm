@@ -138,16 +138,16 @@ class BitStorage:
         return (byte >> offset) & 1
 
     def write_to_file(file_path, value):
-        BitStorage.create_file_if_not_exists(file_path)
         file_path = os.path.join(BitStorage.directory, file_path)
+        BitStorage.create_file_if_not_exists(file_path)
 
         byte_value = bytes(value, "utf-8")
         with open(file_path, "wb") as file:
             file.write(byte_value)
 
     def read_from_file(file_path):
-        BitStorage.create_file_if_not_exists(file_path)
         file_path = os.path.join(BitStorage.directory, file_path)
+        BitStorage.create_file_if_not_exists(file_path)
 
         with open(file_path, "rb") as file:
             try:
