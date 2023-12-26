@@ -103,6 +103,7 @@ check_card_button.grid(row=7, column=0, pady=10, padx=10)
 
 def redeem_card():
     check_card_error_message.configure(text='')
+
     already_redeemed = Card.check_redemption(card_number_input.get())
     if already_redeemed:
         check_card_error_message.configure(text='Card has already been redeemed')
