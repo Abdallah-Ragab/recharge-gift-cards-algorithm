@@ -29,8 +29,8 @@ class Card:
     @staticmethod
     def validate_card_number(card_number: int):
         num_of_digits = len(str(card_number))
-        if num_of_digits != 19:
-            raise ValueError("Invalid Card Number: Card number must be 19 digits long")
+        if num_of_digits not in [18, 19, 20]:
+            raise ValueError("Invalid Card Number")
 
     @staticmethod
     def validate_card_value(card_value: int):
