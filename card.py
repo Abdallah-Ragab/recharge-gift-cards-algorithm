@@ -10,7 +10,7 @@ class Card:
         max_value (int): The maximum value that a recharge card can have.
 
     Methods:
-        generate_card_number(serial: int, value: int) -> int:
+        generate_card_number(value: int, serial: int = None) -> int:
             Generates a unique card number based on the given serial and value.
 
         validate_card_number(card_number: int) -> None:
@@ -35,23 +35,15 @@ class Card:
     max_value = 999
 
     @staticmethod
-    def generate_card_number(serial: int, value: int) -> int:
-        """
-        Generates a unique card number based on the given serial and value.
+    def generate_card_number(value: int, serial: int = None) -> int:
 
-        Args:
-            serial (int): The serial number of the card.
-            value (int): The value of the card.
-
-        Returns:
-            int: The generated card number.
-
-        Raises:
-            ValueError: If the value is greater than the maximum allowed value.
-        """
         if value > Card.max_value:
             raise ValueError("Value is too large")
-        card_serial = serial
+
+        if not serial:
+            serial = Card.last_card_serial + 1
+            Card.last_card_serial = serial
+
         card_value = value
 
         card_serial_str = str(card_serial).zfill(10)
