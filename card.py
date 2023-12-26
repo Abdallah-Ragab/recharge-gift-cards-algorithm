@@ -36,6 +36,7 @@ class Card:
 
         return card_serial, card_value
 
+    @staticmethod
     def check_redemption(card_number: int):
         card_serial, card_value = Card.retrieve_card_info(card_number)
         bit_value = BitStorage.read_bit(card_serial)
@@ -43,11 +44,15 @@ class Card:
             return True
         else:
             return False
-
+    def check_value(card_number: int):
+        card_serial, card_value = Card.retrieve_card_info(card_number)
+        return card_value
+    @staticmethod
     def redeem_card(card_number: int):
         card_serial, card_value = Card.retrieve_card_info(card_number)
         BitStorage.write_bit(card_serial, 1)
         return card_value
+
 
 
 def test():
