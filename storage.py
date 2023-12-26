@@ -6,7 +6,7 @@ class BitStorage:
     directory = "storage"
     num_files = 100
     max_bit = 9_999_999_999
-    max_bits_per_file = max_bit + 1 // num_files
+    max_bits_per_file = max_bit // num_files
 
     def get_file_name(bit_index):
         file_index = bit_index // BitStorage.max_bits_per_file
@@ -17,6 +17,9 @@ class BitStorage:
         return os.path.join(BitStorage.directory, BitStorage.get_file_name(bit_index))
 
     def create_file_if_not_exists(file_path):
+        if not os.path.exists(BitStorage.directory):
+            os.makedirs(BitStorage.directory)
+
         if not os.path.exists(file_path):
             with open(file_path, "w"):
                 pass
