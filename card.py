@@ -19,7 +19,7 @@ class Card:
         validate_card_value(card_value: int) -> None:
             Validates the value of a card.
 
-        retrieve_card_info(card_number: int) -> Tuple[int, int]:
+        get_card_info(card_number: int) -> Tuple[int, int]:
             Retrieves the serial and value of a card based on the card number.
 
         check_redemption(card_number: int) -> bool:
@@ -103,7 +103,7 @@ class Card:
             raise ValueError("Invalid Card Value: Card value must not be more than 999 and greater than 0")
 
     @staticmethod
-    def retrieve_card_info(card_number: int):
+    def get_card_info(card_number: int):
         """
         Retrieves the serial and value of a card based on the card number.
 
@@ -139,7 +139,7 @@ class Card:
         Returns:
             bool: True if the card has been redeemed, False otherwise.
         """
-        card_serial, card_value = Card.retrieve_card_info(card_number)
+        card_serial, card_value = Card.get_card_info(card_number)
         bit_value = BitStorage.read_bit(card_serial)
         if bit_value == 1:
             return True
@@ -157,7 +157,7 @@ class Card:
         Returns:
             int: The value of the card.
         """
-        card_serial, card_value = Card.retrieve_card_info(card_number)
+        card_serial, card_value = Card.get_card_info(card_number)
         return card_value
 
     @staticmethod
@@ -171,7 +171,7 @@ class Card:
         Returns:
             int: The value of the redeemed card.
         """
-        card_serial, card_value = Card.retrieve_card_info(card_number)
+        card_serial, card_value = Card.get_card_info(card_number)
         BitStorage.write_bit(card_serial, 1)
         return card_value
     @staticmethod
@@ -199,7 +199,7 @@ class Card:
 def test():
     card_number = Card.generate_card_number(1234567890, 100)
     print(card_number)
-    card_serial, card_value = Card.retrieve_card_info(card_number)
+    card_serial, card_value = Card.get_card_info(card_number)
     print(card_serial, card_value)
     print(Card.check_redemption(card_number))
     print(Card.redeem_card(card_number))
