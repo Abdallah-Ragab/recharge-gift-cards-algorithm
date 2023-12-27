@@ -6,11 +6,15 @@ ctk.set_appearance_mode('system')
 def redeem_card():
     check_card_error_message.configure(text='')
     card_number = card_number_input.get()
-    already_redeemed = Card.check_redemption(card_number)
+    try:
+        already_redeemed = Card.check_redemption(card_number)
+    except ValueError as e:
+        check_card_error_message.configure(text=str(e))
+        return
     if already_redeemed:
         check_card_error_message.configure(text='Card has already been redeemed')
         return
-    card_value = Card.redeem_card(card_number)
+    Card.redeem_card(card_number)
     check_card()
 
 def check_card():
