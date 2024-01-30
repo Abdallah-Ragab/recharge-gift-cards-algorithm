@@ -1,6 +1,6 @@
 
 # Recharge/Gift Card System
-Fast resource-efficient algorithmic solution for generating, verifying, and redeeming gift or recharge cards requiring only **1.2 GB** of storage while supporting up to **10 billion** unique cards.
+Fast resource-efficient algorithmic solution for generating, verifying, and redeeming gift or recharge cards requiring only **1.2 GB** of storage for **10 billion** unique cards.
 
 ## Description
 A secure and efficient algorithmic solution for generating, verifying, and redeeming gift or recharge cards without relying on large-scale storage systems. The primary goal is to eliminate the need for extensive storage, focusing on security and rapid response times for read and write operations. The system is designed to support up to 10 billion unique cards, requiring only 1.2 GB of storage. The system is implemented in python and utilizes encryption algorithms to generate and verify card numbers.
